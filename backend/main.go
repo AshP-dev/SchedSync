@@ -23,11 +23,8 @@ func main() {
 	router := routes.RegisterRoutes()
 	http.Handle("/", router)
 
-	log.Println("Listening on :3010...")
-	err := http.ListenAndServe(":3010", nil)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// Start server with CORS enabled
+	routes.StartServer()
 }
 
 func populate() {
