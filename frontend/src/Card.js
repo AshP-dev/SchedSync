@@ -1,14 +1,24 @@
-// frontend/src/Card.js
-import React from "react";
+import React, { useState } from "react";
+//import "./Card.css";
 
 const Card = ({ card }) => {
+  const [flipped, setFlipped] = useState(false);
+
+  const handleFlip = () => {
+    setFlipped(!flipped);
+  };
+
   return (
-    <div className='card'>
-      <h2>{card.front}</h2>
-      <p>{card.back}</p>
-      <p>Deck: {card.deck_id}</p>
-      <p>Tags: {card.tags}</p>
-      <p>Due Date: {new Date(card.due_date).toLocaleDateString()}</p>
+    <div className={`card ${flipped ? "flipped" : ""}`} onClick={handleFlip}>
+      <div className='card-inner'>
+        <div className='card-front'>
+          <h2>{card.front}</h2>
+        </div>
+        <div className='card-back'>
+          <h2>{card.front}</h2>
+          <p>{card.back}</p>
+        </div>
+      </div>
     </div>
   );
 };
