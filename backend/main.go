@@ -40,7 +40,7 @@ func populate() {
 	}{
 		{"Chole & Rice", "Delicious Chole Masala with steamed white rice.", "Deck 1", "Tag1,Tag2", time.Now().AddDate(0, 0, 1)},
 		{"Chicken Curry", "Red Gravy Chicken Curry with boneless thigh cuts.", "Deck 1", "Tag2,Tag3", time.Now().AddDate(0, 0, 2)},
-		//{"Front 3", "Back 3", "Deck 2", "Tag1,Tag3", time.Now().AddDate(0, 0, 3)},
+		{"Pasta", "Red Sauce Pasta with grilled chicken", "Deck 2", "Tag1,Tag3", time.Now().AddDate(0, 0, 3)},
 	}
 
 	for _, card := range cards {
