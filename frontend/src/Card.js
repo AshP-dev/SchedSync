@@ -17,6 +17,12 @@ const Card = ({ card }) => {
         <div className='card-back'>
           <h2>{card.front}</h2>
           <p>{card.back}</p>
+          {card.image && <img src={card.image} alt={card.front} />}
+          {card.link && (
+            <a href={card.link} target='_blank' rel='noopener noreferrer'>
+              More Info
+            </a>
+          )}
         </div>
       </div>
     </div>
