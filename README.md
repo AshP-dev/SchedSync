@@ -1,6 +1,6 @@
 # SchedSync
 
-A planner to manage your life - recipes to cook, recurring appointments to attend to, recurring tasks - anything you can think of.
+SchedSync is a powerful organizational tool designed to help you streamline your life and schedule. By combining flashcard-like priority-based spaced repetition with seamless calendar integration, SchedSync ensures you never miss a chore, task, or appointment.
 
 ## Features
 
