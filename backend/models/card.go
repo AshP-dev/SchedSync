@@ -1,9 +1,9 @@
 package models
 
 import (
-	"ankified_planner/services"
-	"ankified_planner/utils"
 	"database/sql"
+	"schedsync/services"
+	"schedsync/utils"
 	"strconv"
 	"time"
 )

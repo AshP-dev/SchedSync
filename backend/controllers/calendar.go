@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	"ankified_planner/models"
-	"ankified_planner/utils"
 	"encoding/json"
 	"net/http"
+	"schedsync/models"
+	"schedsync/utils"
 
-	//"ankified_planner/services"
+	//"schedsync/services"
 	"github.com/gorilla/mux"
 )
 

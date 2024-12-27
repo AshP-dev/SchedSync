@@ -1,33 +1,37 @@
 package main
 
 import (
-	"ankified_planner/routes"
-	"ankified_planner/utils"
+	"context"
 	"log"
 	"net/http"
+	"schedsync/models"
+	"schedsync/repositories"
+	"schedsync/routes"
+	"schedsync/utils"
 	"time"
-	//"google.golang.org/api/calendar/v3"
+
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func main() {
 	// Initialize the database connection
-	populate()
-	utils.GetDB()
-	//defer utils.CloseDB()
+	populateSQLite()
+	db := utils.GetDB()
+	defer utils.CloseDB()
 
-	// Serve static files from the "build" directory
-	fs := http.FileServer(http.Dir("./build"))
-	http.Handle("/static/", fs)
+	// Create repository instances
+	cardRepo := repositories.NewSQLiteCardRepository(db)
+	//calendarEventRepo := repositories.NewSQLiteCalendarEventRepository(db)
 
-	// Register API routes
-	router := routes.RegisterRoutes()
+	// Register API routes with repositories
+	router := routes.RegisterRoutes(cardRepo)
 	http.Handle("/", router)
 
 	// Start server with CORS enabled
-	routes.StartServer()
+	routes.StartServer(cardRepo)
 }
 
-func populate() {
+func populateSQLite() {
 	db := utils.GetDB()
 	//defer utils.CloseDB()
 
@@ -49,6 +53,45 @@ func populate() {
 		if err != nil {
 			log.Fatalf("Failed to insert card: %v", err)
 		}
+	}
+
+	log.Println("Database populated with sample cards.")
+}
+
+func populateMongo(collection *mongo.Collection) {
+	cards := []interface{}{
+		models.Card{
+			Front:     "Chole & Rice",
+			Back:      "Delicious Chole Masala with steamed white rice.",
+			DeckID:    "Deck 1",
+			Tags:      "Tag1,Tag2",
+			DueDate:   time.Now().AddDate(0, 0, 1),
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+		},
+		models.Card{
+			Front:     "Chicken Curry",
+			Back:      "Red Gravy Chicken Curry with boneless thigh cuts.",
+			DeckID:    "Deck 1",
+			Tags:      "Tag2,Tag3",
+			DueDate:   time.Now().AddDate(0, 0, 2),
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+		},
+		models.Card{
+			Front:     "Pasta",
+			Back:      "Red Sauce Pasta with grilled chicken",
+			DeckID:    "Deck 2",
+			Tags:      "Tag1,Tag3",
+			DueDate:   time.Now().AddDate(0, 0, 3),
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+		},
+	}
+
+	_, err := collection.InsertMany(context.Background(), cards)
+	if err != nil {
+		log.Fatalf("Failed to insert cards: %v", err)
 	}
 
 	log.Println("Database populated with sample cards.")
