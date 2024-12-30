@@ -1,19 +1,28 @@
 :root {
-  --twitter-background: #15202B;
-  --twitter-text: #FFFFFF;
-  --twitter-secondary: #8899A6;
-  --twitter-border: #38444D;
-  --twitter-blue: #1D9BF0;
-  --twitter-hover: #162D40;
-  --light-background: #FFFFFF;
-  --light-text: #000000;
-  --light-secondary: #555555;
+  --background-dark: #1E1E2F;
+  --background-light: #FFFFFF;
+  --text-dark: #E0E0E0;
+  --text-light: #1E1E2F;
+  --primary-color: #FF6F61;
+  --primary-color-hover: #FF3B2F;
+  --secondary-color: #6C63FF;
+  --secondary-color-hover: #4B42FF;
+  --button-text-color: #FFFFFF;
+  --border-color: #2E2E3E;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-dark);
+  color: var(--text-dark);
 }
 
 .App {
   text-align: left;
-  background-color: var(--twitter-background);
+  background-color: var(--background-dark);
   min-height: 100vh;
+  padding: 20px;
 }
 
 .App-logo {
@@ -27,15 +36,15 @@
 }
 
 .App-header {
-  background-color: var(--twitter-background);
+  background-color: var(--background-dark);
   min-height: 100vh;
   padding: 0;
   margin: 0;
-  color: var(--twitter-text);
+  color: var(--text-dark);
 }
 
 .App-link {
-  color: var(--twitter-blue);
+  color: var(--primary-color);
   text-decoration: none;
 }
 
@@ -46,20 +55,23 @@
 .card-list {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Add space between cards */
-  background-color: var(--twitter-background);
-  padding: 16px; /* Add padding to the container */
+  gap: 16px;
+  background-color: var(--background-dark);
+  padding: 16px;
 }
 
 .card {
   perspective: 1000px;
-  margin-bottom: 16px; /* Add margin to the bottom of each card */
+  margin-bottom: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .card-inner {
   position: relative;
   width: 100%;
-  height: 200px; /* Define a fixed height for the card */
+  height: 200px;
   transform-style: preserve-3d;
   transition: transform 0.6s;
 }
@@ -71,21 +83,36 @@
 .card-front, .card-back {
   position: absolute;
   width: 100%;
-  height: 100%; /* Ensure the front and back cover the entire card */
+  height: 100%;
   backface-visibility: hidden;
   padding: 16px;
   box-sizing: border-box;
 }
 
 .card-front {
-  background-color: var(--twitter-background);
-  color: var(--twitter-text);
+  background-color: var(--background-light);
+  color: var(--text-light);
 }
 
 .card-back {
-  background-color: var(--light-background);
-  color: var(--light-text);
+  background-color: var(--secondary-color);
+  color: var(--text-dark);
   transform: rotateY(180deg);
+}
+
+.review-buttons button {
+  margin: 0 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  color: var(--button-text-color);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.review-buttons button:hover {
+  background-color: var(--primary-color-hover);
 }
 
 main {

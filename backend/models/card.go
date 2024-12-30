@@ -9,15 +9,17 @@ import (
 )
 
 type Card struct {
-	ID        string    `json:"id"`
-	Front     string    `json:"front"`
-	Back      string    `json:"back"`
-	DeckID    string    `json:"deck_id"`
-	Tags      string    `json:"tags"`
-	DueDate   time.Time `json:"due_date"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
-	Interval  int
+	ID         string    `json:"id"`
+	Front      string    `json:"front"`
+	Back       string    `json:"back"`
+	DeckID     string    `json:"deck_id"`
+	Tags       string    `json:"tags"`
+	DueDate    time.Time `json:"due_date"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
+	ReviewedAt time.Time `json:"reviewed_at"`
+	Rating     int       `json:"rating"`
+	Interval   int       `json:"interval"`
 }
 
 func CreateCard(card Card) (string, error) {

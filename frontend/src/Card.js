@@ -9,12 +9,15 @@ const Card = ({ card }) => {
   };
 
   const handleReview = (rating) => {
+    const payload = JSON.stringify({ rating });
+    console.log("Payload:", payload); // Log the payload
+
     fetch(`http://localhost:3010/api/cards/${card.id}/review`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ rating }),
+      body: payload,
     })
       .then((response) => response.json())
       .then((data) => {
@@ -40,12 +43,11 @@ const Card = ({ card }) => {
             </a>
           )}
           <div className='review-buttons'>
-            <p>How likely are you to make this again?</p>
-            <button onClick={() => handleReview(1)}>1</button>
-            <button onClick={() => handleReview(2)}>2</button>
-            <button onClick={() => handleReview(3)}>3</button>
-            <button onClick={() => handleReview(4)}>4</button>
-            <button onClick={() => handleReview(5)}>5</button>
+            {[1, 2, 3, 4, 5].map((rating) => (
+              <button key={rating} onClick={() => handleReview(rating)}>
+                {rating}
+              </button>
+            ))}
           </div>
         </div>
       </div>

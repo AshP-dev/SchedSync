@@ -16,8 +16,8 @@ func NewSQLiteCardRepository(db *sql.DB) *SQLiteCardRepository {
 }
 
 func (r *SQLiteCardRepository) CreateCard(card models.Card) (string, error) {
-	query := "INSERT INTO cards (front, back, deck_id, tags, due_date, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)"
-	result, err := r.db.Exec(query, card.Front, card.Back, card.DeckID, card.Tags, card.DueDate, time.Now(), time.Now())
+	query := "INSERT INTO cards (front, back, deck_id, tags, due_date, created_at, updated_at, reviewed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+	result, err := r.db.Exec(query, card.Front, card.Back, card.DeckID, card.Tags, card.DueDate, time.Now(), time.Now(), time.Now())
 	if err != nil {
 		return "", err
 	}
@@ -79,8 +79,8 @@ func (r *SQLiteCardRepository) GetCards(deckID string, tag string, dueDate strin
 }
 
 func (r *SQLiteCardRepository) ReviewCard(cardID string, rating int) (models.Card, error) {
-	query := "UPDATE cards SET reviewed_at = ? WHERE id = ?"
-	_, err := r.db.Exec(query, time.Now(), cardID)
+	query := "UPDATE cards SET reviewed_at = ?, rating = ? WHERE id = ?"
+	_, err := r.db.Exec(query, time.Now(), rating, cardID)
 	if err != nil {
 		return models.Card{}, err
 	}

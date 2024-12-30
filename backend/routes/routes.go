@@ -28,8 +28,11 @@ func RegisterRoutes(cardRepo repositories.CardRepository) *mux.Router {
 	// Card Management Routes
 	router.HandleFunc("/api/cards", controllers.CreateCard(cardRepo)).Methods("POST")
 	router.HandleFunc("/api/cards", controllers.GetCards(cardRepo)).Methods("GET")
-	router.HandleFunc("/api/cards/{cardId}", controllers.UpdateCard(cardRepo)).Methods("PUT")
-	router.HandleFunc("/api/cards/{cardId}", controllers.DeleteCard(cardRepo)).Methods("DELETE")
+	router.HandleFunc("/api/cards/{card.Id}", controllers.UpdateCard(cardRepo)).Methods("PUT")
+	router.HandleFunc("/api/cards/{card.Id}", controllers.DeleteCard(cardRepo)).Methods("DELETE")
+
+	//Handle card reviews
+	router.HandleFunc("/api/cards/{card.Id}/review", controllers.ReviewCard(cardRepo)).Methods("POST")
 
 	// // Calendar Management Routes
 	// router.HandleFunc("/api/calendar/events", controllers.CreateCalendarEvent(calendarEventRepo)).Methods("POST")
