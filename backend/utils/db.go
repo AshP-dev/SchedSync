@@ -17,17 +17,19 @@ var (
 )
 
 type Card struct {
-	ID        string    `json:"id"`
-	Front     string    `json:"front"`
-	Back      string    `json:"back"`
-	DeckID    string    `json:"deck_id"`
-	Tags      string    `json:"tags"`
-	DueDate   time.Time `json:"due_date"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
-	Interval  int
-	ImageURL  string `json:"image_url"`
-	LinkURL   string `json:"link_url"`
+	ID         string    `json:"id"`
+	Front      string    `json:"front"`
+	Back       string    `json:"back"`
+	DeckID     string    `json:"deck_id"`
+	Tags       string    `json:"tags"`
+	DueDate    time.Time `json:"due_date"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
+	ReviewedAt time.Time `json:"reviewed_at"`
+	Rating     int       `json:"rating"`
+	Interval   int       `json:"interval"`
+	ImageURL   string    `json:"image_url"`
+	LinkURL    string    `json:"link_url"`
 }
 
 func GetDB() *sql.DB {
@@ -45,26 +47,32 @@ func GetDB() *sql.DB {
 		}
 
 		// Create tables if they don't exist
-		createTables()
+		createTables(db)
 	})
 	return db
 }
 
-func createTables() {
+func createTables(db *sql.DB) {
 	createCardsTable := `
-	CREATE TABLE IF NOT EXISTS cards (
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		front TEXT,
-		back TEXT,
-		deck_id TEXT,
-		tags TEXT,
-		due_date DATETIME,
-		created_at DATETIME,
-		updated_at DATETIME
-	);`
+    CREATE TABLE IF NOT EXISTS cards (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        front TEXT,
+        back TEXT,
+        deck_id TEXT,
+        tags TEXT,
+        due_date DATETIME,
+        created_at DATETIME,
+        updated_at DATETIME,
+        reviewed_at DATETIME,
+        rating INTEGER,
+        interval INTEGER,
+        image_url TEXT,
+        link_url TEXT
+    );
+    `
 	_, err := db.Exec(createCardsTable)
 	if err != nil {
-		log.Fatalf("Failed to create tables: %v", err)
+		log.Fatalf("Failed to create cards table: %v", err)
 	}
 }
 

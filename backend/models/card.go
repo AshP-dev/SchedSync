@@ -20,6 +20,8 @@ type Card struct {
 	ReviewedAt time.Time `json:"reviewed_at"`
 	Rating     int       `json:"rating"`
 	Interval   int       `json:"interval"`
+	ImageURL   string    `json:"image_url"`
+	LinkURL    string    `json:"link_url"`
 }
 
 func CreateCard(card Card) (string, error) {
