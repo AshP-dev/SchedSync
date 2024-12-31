@@ -1,5 +1,6 @@
 const { TwitterApi } = require("twitter-api-v2");
 const { execSync } = require("child_process");
+require("dotenv").config();
 
 const client = new TwitterApi({
   appKey: process.env.TWITTER_API_KEY,
@@ -28,36 +29,13 @@ const getWeeklyCommitSummary = () => {
   );
 };
 
-const splitMessage = (message) => {
-  const maxLength = 250;
-  const messages = [];
-  while (message.length > maxLength) {
-    let splitIndex = message.lastIndexOf(" ", maxLength);
-    if (splitIndex === -1) splitIndex = maxLength;
-    messages.push(message.slice(0, splitIndex));
-    message = message.slice(splitIndex).trim();
-  }
-  messages.push(message);
-  return messages;
-};
-
 const tweetSummary = async () => {
   const summary = getWeeklyCommitSummary();
-  const messages = splitMessage(summary);
-  let replyToId = null;
-
-  for (const message of messages) {
-    try {
-      const tweet = await client.v2.tweet(
-        message,
-        replyToId ? { in_reply_to_status_id: replyToId } : {}
-      );
-      replyToId = tweet.data.id;
-      console.log("Tweet sent successfully!");
-    } catch (error) {
-      console.error("Error sending tweet:", error);
-      break;
-    }
+  try {
+    await client.v2.tweet(summary);
+    console.log("Tweeted successfully!");
+  } catch (error) {
+    console.error("Error tweeting:", error);
   }
 };
 
