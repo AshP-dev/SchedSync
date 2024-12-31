@@ -20,7 +20,7 @@ SchedSync is a powerful organizational tool designed to help you streamline your
 - Node.js 14+
 - PostgreSQL
 
-### Local setup -
+### Local setup
 
 #### Backend Setup
 
