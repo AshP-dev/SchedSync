@@ -1,6 +1,5 @@
 const { TwitterApi } = require("twitter-api-v2");
 const { execSync } = require("child_process");
-require("dotenv").config();
 
 const client = new TwitterApi({
   appKey: process.env.TWITTER_API_KEY,
