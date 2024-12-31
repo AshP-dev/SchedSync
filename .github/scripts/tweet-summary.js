@@ -16,10 +16,21 @@ const getWeeklyCommitSummary = () => {
   const command = `git log --since="${dateString}" --oneline | wc -l`;
   const commitCount = execSync(command).toString().trim();
 
+  const commitMessagesCommand = `git log --since="${dateString}" --pretty=format:"%s"`;
+  const commitMessages = execSync(commitMessagesCommand)
+    .toString()
+    .trim()
+    .split("\n");
+
+  const commitMessagesText = commitMessages
+    .map((msg, index) => `${index + 1}. ${msg}`)
+    .join("\n");
+
   return (
     `Weekly commit summary for ${process.env.GITHUB_REPOSITORY}:\n` +
-    `Total commits in the past week: ${commitCount}\n` +
-    `Check out our progress: https://github.com/${process.env.GITHUB_REPOSITORY}`
+    `Total commits in the past week: ${commitCount}\n\n` +
+    `Commit messages:\n${commitMessagesText}\n\n` +
+    `Check out the progress: https://github.com/${process.env.GITHUB_REPOSITORY}`
   );
 };
 
