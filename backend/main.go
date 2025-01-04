@@ -31,6 +31,51 @@ func main() {
 	routes.StartServer(cardRepo)
 }
 
+// func main() {
+// 	// Use the SetServerAPIOptions() method to set the version of the Stable API on the client
+// 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
+// 	opts := options.Client().ApplyURI("mongodb+srv://<SCHEDSYNC_ADMIN>:<SCHEDSYNC_ADMIN_PASSWORD>@cluster0.gdzbr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").SetServerAPIOptions(serverAPI)
+
+// 	// Create a new client and connect to the server
+// 	client, err := mongo.Connect(context.TODO(), opts)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+
+// 	defer func() {
+// 		if err = client.Disconnect(context.TODO()); err != nil {
+// 			panic(err)
+// 		}
+// 	}()
+
+// 	// Send a ping to confirm a successful connection
+// 	if err := client.Database("admin").RunCommand(context.TODO(), bson.D{{"ping", 1}}).Err(); err != nil {
+// 		panic(err)
+// 	}
+// 	fmt.Println("Pinged your deployment. You successfully connected to MongoDB!")
+
+// 	// Create repository instances
+// 	cardCollection := client.Database("schedsync").Collection("cards")
+// 	cardRepo := repositories.NewMongoCardRepository(cardCollection)
+// 	populateMongo(cardCollection)
+
+// 	// Register API routes with repositories
+// 	router := routes.RegisterRoutes(cardRepo)
+// 	http.Handle("/", router)
+// 	c := cors.New(cors.Options{
+// 		AllowedOrigins:   []string{"http://localhost:3000"}, // Update with your frontend URL
+// 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
+// 		AllowedHeaders:   []string{"Content-Type"},
+// 		AllowCredentials: true,
+// 	})
+
+// 	// Start server with CORS enabled
+// 	handler := c.Handler(router)
+// 	log.Fatal(http.ListenAndServe(":8080", handler))
+// 	// Start server with CORS enabled
+// 	// routes.StartServer(cardRepo)
+// }
+
 func populateSQLite(repo repositories.CardRepository) {
 	cards := []models.Card{
 		{Front: "Chole & Rice", Back: "Delicious Chole Masala with steamed white rice.", DeckID: "Deck 1", Tags: "Tag1,Tag2", DueDate: time.Now().AddDate(0, 0, 1)},

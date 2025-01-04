@@ -11,6 +11,9 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// serverAPI := options.ServerAPI(options.ServerAPIVersion1)
+//   opts := options.Client().ApplyURI("mongodb+srv://ashwatthap:<db_password>@cluster0.gdzbr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").SetServerAPIOptions(serverAPI)
+
 type MongoCardRepository struct {
 	collection *mongo.Collection
 }
