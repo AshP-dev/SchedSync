@@ -14,15 +14,25 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all branches and tags
 
+      - name: Check for commits in the past week
+        id: check_commits
+        run: |
+          COMMITS=$(git rev-list --count --since="7 days ago" HEAD)
+          echo "Commit count in the last week: $COMMITS"
+          echo "commits=$COMMITS" >> $GITHUB_OUTPUT
+
       - name: Set up Node.js
+        if: steps.check_commits.outputs.commits != '0'
         uses: actions/setup-node@v2
         with:
           node-version: "14"
 
       - name: Install dependencies
+        if: steps.check_commits.outputs.commits != '0'
         run: npm install twitter-api-v2
 
       - name: Generate and tweet summary
+        if: steps.check_commits.outputs.commits != '0'
         env:
           TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
           TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
